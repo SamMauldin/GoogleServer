@@ -20,7 +20,7 @@ end
 end
 print("Github loaded")
 function dlfile(fpath)
-local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..string.sub(fpath,6))
+local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..fpath)
 if fle then
 fs.delete(string.sub(fpath,6))
 local fh=fs.open(string.sub(fpath,6),"w")
