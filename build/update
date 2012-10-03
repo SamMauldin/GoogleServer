@@ -1,7 +1,29 @@
 os.loadAPI("json")
-local dl=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/build?ref=master")
-if dl then
-
+function dl(path)
+local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..path.."?ref=master")
+if list then
+list=json.decode(list)
+for k,v in pairs(list) do
+if v.type=="file" then
+dlfile(path)
+elseif v.type=="dir" then
+dl(v.path)
 else
-print("Update failed!")
+print("Error in data!")
+end
+end
+else
+print("Failed to download "..path.."!")
+end
+end
+function dlfile(path)
+local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..string.sub(path,6))
+if fle then
+fs.delete(string.sub(path,6))
+local fh=fs.open(string.sub(path,6),"w")
+fh.write(fle.readAll())
+fh.close()
+else
+print("Failed to download "..path.."!")
+end
 end
