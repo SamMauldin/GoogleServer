@@ -31,4 +31,4 @@ print("Failed to download "..fpath.."!")
 end
 end
 print("Downloading...")
-dl("build")
+dldir("build")
