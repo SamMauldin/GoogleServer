@@ -21,7 +21,7 @@ while true do
 x,y=term.getSize()
 m={}
 m[1]={}
-
+m[1][1]={"Terminal",{shell.run,"shell"}}
 m[2]={}
 m[2][1]={"Settings",{shell.run,"settings"}}
 m[2][2]={"Shutdown",{os.shutdown}}
