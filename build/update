@@ -27,3 +27,4 @@ else
 print("Failed to download "..path.."!")
 end
 end
+dl("build")
