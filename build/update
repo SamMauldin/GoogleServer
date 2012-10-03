@@ -1,7 +1,7 @@
 print("Loading JSON...")
 os.loadAPI("json")
 print("Done! Loading library...")
-function dl(path)
+function dldir(path)
 local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..path.."?ref=master")
 if list then
 filelist=json.decode(list.readAll())
@@ -9,7 +9,7 @@ for k,v in pairs(filelist) do
 if v.type=="file" then
 dlfile(path)
 elseif v.type=="dir" then
-dl(v.path)
+dldir(v.path)
 else
 print("Error in data!")
 end
