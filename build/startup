@@ -8,12 +8,10 @@ data.load("/db")
 function login(app)
 	write("Password required:")
 	pw=read()
-	if data.getTable("auth")[app] then
-		return true
-	elseif pw=="default" then
-		return true
+	if data.getTable("auth")[app]==nil then
+		return pw=="default"
 	else
-		return false
+		return data.getTable("auth")[app]==pw
 	end
 end
 function mainmenu()
