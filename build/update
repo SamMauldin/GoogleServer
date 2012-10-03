@@ -2,8 +2,8 @@ os.loadAPI("json")
 function dl(path)
 local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..path.."?ref=master")
 if list then
-list=json.decode(list)
-for k,v in pairs(list) do
+filelist=json.decode(list.readAll())
+for k,v in pairs(filelist) do
 if v.type=="file" then
 dlfile(path)
 elseif v.type=="dir" then
