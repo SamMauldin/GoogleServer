@@ -1,7 +1,7 @@
 if not os.loadAPI("/serialize") then
 error("Requires immibis's serialize api to be installed to /serialize")
 end
-local db=nil
+local db={}
 --Sxw's DB API
 function load(path)
 local fh=fs.open(path,"r")
