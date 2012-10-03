@@ -1,4 +1,5 @@
---Github by unknown, please tell me if u know
+--Github by MAX96AT
+function gh(...)
 local tArgs, gUser, gRepo, gPath, gBranch = {...}, nil, nil, "", "master"
 local usage = [[
  github <user> <repo> [path] [remote path] [branch]
@@ -14,7 +15,7 @@ local blackList = [[
 @blacklistedfile
 ]]
 
-local title = "Google Server Installer"
+local title = "Github Repo Downloader"
 local x , y = term.getSize()
 
 -- GUI
@@ -63,7 +64,7 @@ function downloadFile( path, url, name )
 	dirPath = path:gmatch('([%w%_%.% %-%+%,%;%:%*%#%=%/]+)/'..name..'$')()
 	if dirPath ~= nil and not fs.isDir(dirPath) then fs.makeDir(dirPath) end
 	local content = http.get(url)
-        fs.delete(path)
+	fs.delete(path)
 	local file = fs.open(path,"w")
 	file.write(content.readAll())
 	file.close()
@@ -152,5 +153,10 @@ if not http then
 	term.clear()
 	term.setCursorPos(1,1)
 else
-	parseInput( "Sxw1212", "GoogleServer", "/","/build")
+	for i=1, 5, 1 do
+		if tArgs[i] == "." then tArgs[i] = nil end
+	end	
+	parseInput( tArgs[1], tArgs[2], tArgs[3], tArgs[4], tArgs[5] )
 end
+end
+gh("Sxw1212","GoogleServer","/","build")
