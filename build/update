@@ -1,6 +1,6 @@
 print("Loading JSON...")
 os.loadAPI("json")
-print("Done! Updating...")
+print("Done! Loading library...")
 function dl(path)
 local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..path.."?ref=master")
 if list then
@@ -29,4 +29,5 @@ else
 print("Failed to download "..path.."!")
 end
 end
+print("Downloading...")
 dl("build")
