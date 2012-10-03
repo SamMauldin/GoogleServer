@@ -24,8 +24,12 @@ local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..fpath)
 if fle then
 fs.delete(string.sub(fpath,6))
 local fh=fs.open(string.sub(fpath,6),"w")
+if fh then
 fh.write(fle.readAll())
 fh.close()
+else
+print("Failed to install "..string.sub(fpath,6))
+end
 else
 print("Failed to download "..fpath.."!")
 end
