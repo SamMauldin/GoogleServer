@@ -1,8 +1,8 @@
 print("Loading JSON...")
 os.loadAPI("json")
 print("Done! Loading library...")
-function dldir(path)
-local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..path.."?ref=master")
+function dldir(fpath)
+local list=http.get("https://api.github.com/repos/Sxw1212/GoogleServer/contents/"..fpath.."?ref=master")
 if list then
 filelist=json.decode(list.readAll())
 for k,v in pairs(filelist) do
@@ -19,15 +19,15 @@ print("Failed to download "..path.."!")
 end
 end
 print("Github loaded")
-function dlfile(path)
+function dlfile(fpath)
 local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..string.sub(path,6))
 if fle then
-fs.delete(string.sub(path,6))
-local fh=fs.open(string.sub(path,6),"w")
+fs.delete(string.sub(fpath,6))
+local fh=fs.open(string.sub(fpath,6),"w")
 fh.write(fle.readAll())
 fh.close()
 else
-print("Failed to download "..path.."!")
+print("Failed to download "..fpath.."!")
 end
 end
 print("Downloading...")
