@@ -18,6 +18,7 @@ else
 print("Failed to download "..path.."!")
 end
 end
+print("Github loaded")
 function dlfile(path)
 local fle=http.get("https://raw.github.com/Sxw1212/GoogleServer/master/"..string.sub(path,6))
 if fle then
