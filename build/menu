@@ -1,0 +1,124 @@
+--KaoS's menu API
+--[[SYNTAX:
+apiname.generate(table, separator, x1, y1, x2, y2, delim1, delim2)
+
+an example of its use can be found at http://pastebin.com/LTBY9xcW
+
+table - a table of all the options selectable and what to do if each option is selected
+the format of table is:
+table[y][x][1]='displayed option'
+table[y][x][2]=another table where the first value is the function to call (exclude the brackets after it and do not make it a string, it is a function) and all values after it are passed to the function as arguments
+
+separator - the x distance between the first character of each option (default is 10)
+
+x1,y1,x2 and y2 are used to generate a box in which the menu is generated
+x1 and y1 are the co-ordinates of the top left corner
+x2 and y2 are the co-ordinates of the bottom right corner
+
+delim1 and 2 are the character to display before and after the selected option (default is '>' and '<')
+]]
+
+function generate(input,dist,offsetx,offsety,limx,limy,delim1,delim2)
+	--[Required functions]
+	local function pullfirst(input)
+		local first=input[1]
+		local temp={}
+		for k,v in pairs(input) do
+			if k~=1 then
+				temp[#temp+1]=v
+			end
+		end
+		return first,temp
+	end
+
+	local function cleararea(...)
+		local pos={term.getCursorPos()}
+		local args={...}
+		for y=args[2], args[2]+args[4]-2 do
+			term.setCursorPos(args[1],y)
+			write(string.rep(' ',args[3]-args[1]+1))
+		end
+		term.setCursorPos(pos[1],pos[2])
+	end
+	
+	--[Gathering initial information and declaring variables]
+	local scrolledx=0
+	local scrolledy=0
+	local selectedx=1
+	local selectedy=1
+	local lastx=0
+	dist=dist or 10
+	local columnmaxlen={}
+	local maxlen=0
+	for b,y in pairs(input) do
+		for a,x in pairs(y) do
+			if columnmaxlen[a] or 0<string.len(x[1]) then
+				columnmaxlen[a]=string.len(x[1])
+			end
+		end
+	end
+	for a,b in pairs(columnmaxlen) do
+		if string.len(b)>maxlen then
+			maxlen=string.len(b)
+		end
+	end
+	
+	while true do
+		--[Render the menu]
+		cleararea(offsetx,offsety,limx,limy)
+		lastx=0
+		for b,y in pairs(input) do
+			for a,x in pairs(y) do
+				currentlen=dist*(a-scrolledx-1)+columnmaxlen[a]
+				
+				if b>scrolledy and b<=limy-offsety+scrolledy+1 and a>scrolledx and currentlen<limx-offsetx+1 then
+					lastx=(lastx<=a and a) or lastx
+					if a==selectedx and b==selectedy then
+						term.setCursorPos(offsetx+a*dist-scrolledx*dist-dist,offsety+b-1-scrolledy)
+						write((delim1 or '>')..x[1]..(delim2 or delim1 or '<'))
+					else
+						term.setCursorPos(offsetx+1+a*dist-scrolledx*dist-dist,offsety+b-1-scrolledy)
+						write(x[1])
+					end
+				end
+			end
+		end
+		print('')
+		
+		--[Detect keypresses for interface and adjust variables accordingly]
+		while true do
+			local event,key=os.pullEvent('key')
+			if key==203 and selectedx>1 then
+				selectedx=selectedx-1
+				if selectedx<=scrolledx then
+					scrolledx=scrolledx-1
+				end
+				break
+			elseif key==205 and selectedx<#input[selectedy] then
+				selectedx=selectedx+1
+				if selectedx>lastx then
+					scrolledx=scrolledx+1
+				end
+				break
+			elseif key==200 and selectedy>1 then
+				selectedy=selectedy-1
+				if selectedy<=scrolledy then
+				scrolledy=scrolledy-1
+				end
+				break
+			elseif key==208 and selectedy<#input then
+				selectedy=selectedy+1
+				if selectedy>limy-offsety+scrolledy+1 then
+					scrolledy=scrolledy+1
+				end
+				break
+			elseif key==28 then
+				local cmd={pullfirst(input[selectedy][selectedx][2])}
+				return cmd[1](unpack(cmd[2]))
+			end
+		end
+		if selectedx>#input[selectedy] then
+			selectedx=#input[selectedy]
+		end
+	end
+end

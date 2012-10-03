@@ -1,0 +1,30 @@
+function setpw(app)
+term.clear()
+term.setCursorPos(1,1)
+print("Setting password for "..app..":")
+pws=data.getTable("auth")
+pws[app]=read()
+data.saveTable("auth",pws)
+data.save("/db")
+end
+if login("settings") then
+done=false
+while not done do
+x,y=term.getSize()
+m={}
+m[1]={}
+m[1][1]={"Passwords",{function()
+m={}
+m[1]={}
+m[1][1]={"Main",{setpw,"main"}}
+m[2]={}
+m[2][1]={"Back",{function() end}}
+end}}
+m[2]={}
+m[2][1]={"Exit",{function() done=true end}}
+menu.generate(m,10,1,1,x,y)
+end
+else
+print("Bad login! The default password is default. The passwords may be different from other password in the system.")
+os.pullEvent("key")
+end

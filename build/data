@@ -1,0 +1,43 @@
+if not os.loadAPI("/serialize") then
+error("Requires immibis's serialize api to be installed to /serialize")
+end
+local db=nil
+--Sxw's DB API
+function load(path)
+local fh=fs.open(path,"r")
+if fh then
+db=serialize.deserialize(fh.readAll())
+fh.close()
+else
+db={}
+end
+end
+function setDB(d)
+db=serialize.deserialize(d)
+end
+function save(path)
+fs.delete(path)
+local fh=fs.open(path,"w")
+fh.write(serialize.serialize(db))
+fh.close()
+end
+function getTable(name)
+if db[name] then
+return db[name]
+else
+return {}
+end
+end
+function saveTable(name,data)
+db[name]=data
+end
+function getTables()
+local tables={}
+for k,v in pairs(db) do
+table.insert(tables,k)
+end
+return tables
+end
+function getRaw()
+return serialize.serialize(db)
+end

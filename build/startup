@@ -1,0 +1,39 @@
+term.clear()
+term.setCursorPos(1,1)
+print("Loading...")
+os.loadAPI("/data")
+os.loadAPI("/menu")
+data.load("/db")
+--[[ Functions ]]--
+function login(app)
+	write("Password required:")
+	pw=read()
+	if data.getTable("auth")[app] then
+		return true
+	elseif pw=="default" then
+		return true
+	else
+		return false
+	end
+end
+function mainmenu()
+while true do
+x,y=term.getSize()
+m={}
+m[1]={}
+
+m[2]={}
+m[2][1]={"Settings",{shell.run,"settings"}}
+m[2][2]={"Shutdown",{os.shutdown}}
+m[2][3]={"Reboot",{os.reboot}}
+menu.generate(m,10,1,1,x,y)
+end
+end
+--[[ Main ]]--
+if login("main") then
+mainmenu()
+else
+print("Sorry! Bad login. Default password is default")
+end
+os.pullEvent("key")
+os.shutdown()
