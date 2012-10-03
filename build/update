@@ -7,7 +7,7 @@ if list then
 filelist=json.decode(list.readAll())
 for k,v in pairs(filelist) do
 if v.type=="file" then
-dlfile(path)
+dlfile(v.path)
 elseif v.type=="dir" then
 dldir(v.path)
 else
