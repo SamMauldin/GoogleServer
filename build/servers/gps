@@ -1,6 +1,6 @@
-function savecfg(k,v)
+function savecfg(k)
 gpsd=data.getTable("gps")
-gpsd[k]=v
+gpsd[k]=read()
 data.saveTable("gps",gpsd)
 data.save()
 end
@@ -9,9 +9,9 @@ gpsd=data.getTable("gps")
 write("Current config is "..tostring(gpsd["x"])..":"..tostring(gpsd["y"])..":"..tostring(gpsd["z"]))
 m={}
 m[1]={}
-m[1][1]={"X",{savecfg,"x",read()}}
-m[1][1]={"Y",{savecfg,"y",read()}}
-m[1][1]={"Z",{savecfg,"z",read()}}
+m[1][1]={"X",{savecfg,"x"}}
+m[1][1]={"Y",{savecfg,"y"}}
+m[1][1]={"Z",{savecfg,"z"}}
 m[2]={}
 m[2][1]={"Back",{function() end}}
 menu.generate(m,10,1,2,x,y)
