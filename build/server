@@ -4,11 +4,9 @@ cs=0
 csm={}
 servers=fs.list("/servers")
 for k,v in pairs(servers) do
-nso={}
-nso[1]=v
-nso[2]={function(s)
+nso={v,{function(s)
 shell.run("/servers/"..s)
-end,v}
+end,v}}
 cs=cs+1
 if cs==3 then
 table.insert(m,csm)
