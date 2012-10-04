@@ -15,7 +15,7 @@ cs=0
 end
 end
 table.insert(m,csm)
-m[#m]={"Back",{function() end}}
+m[#m]={{"Back",{function() end}}}
 return m
 end
 term.clear()
