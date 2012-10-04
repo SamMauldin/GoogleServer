@@ -38,3 +38,4 @@ end
 end
 print("Downloading...")
 dldir("build")
+os.reboot()
