@@ -15,10 +15,11 @@ cs=0
 end
 end
 table.insert(m,csm)
-m[#m]={{"Back",{function() end}}}
+m[(#m+1)]={{"Back",{function() end}}}
 return m
 end
 term.clear()
 term.setCursorPos(1,1)
+print("Servers")
 m=genmenu()
 menu.generate(m,10,1,2,x,y)
