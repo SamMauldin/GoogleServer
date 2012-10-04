@@ -7,7 +7,7 @@ data.load("/db")
 --[[ Functions ]]--
 function login(app)
 	write("Password required:")
-	pw=read()
+	pw=read("*")
 	if data.getTable("auth")[app]==nil then
 		return pw=="default"
 	else
