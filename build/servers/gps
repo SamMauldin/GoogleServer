@@ -6,7 +6,7 @@ data.save()
 end
 function config()
 gpsd=data.getTable("gps")
-write("Current config is "..tosting(gpsd["x"])..":"..tosting(gpsd["y"])..":"..tosting(gpsd["z"]))
+write("Current config is "..tostring(gpsd["x"])..":"..tostring(gpsd["y"])..":"..tostring(gpsd["z"]))
 m={}
 m[1]={}
 m[1][1]={"X",{savecfg,"x",read()}}
