@@ -1,0 +1,25 @@
+function genmenu()
+m={}
+cs=0
+csm={}
+servers=fs.list("/servers")
+for k,v in pairs(servers) do
+nso={}
+nso[1]=v
+nso[2]={function(s)
+shell.run("/servers/"..s)
+end,v}
+cs=cs+1
+if cs==3 then
+table.insert(m,csm)
+cs=0
+end
+end
+table.insert(m,csm)
+m[#m]={"Back",{function() end}}
+return m
+end
+term.clear()
+term.setCursorPos(1,1)
+m=genmenu()
+menu.generate(m,10,1,2,x,y)
