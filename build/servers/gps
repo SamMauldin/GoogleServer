@@ -2,7 +2,7 @@ function savecfg(k)
 gpsd=data.getTable("gps")
 gpsd[k]=read()
 data.saveTable("gps",gpsd)
-data.save()
+data.save("/db")
 end
 function config()
 gpsd=data.getTable("gps")
